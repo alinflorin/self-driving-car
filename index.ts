@@ -6,11 +6,11 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 canvas.width = 200;
 const ctx = canvas.getContext('2d');
 
-const car = new Car(100, 100, 30, 50);
+const car = new Car(100, 100, 30, 50, 3, true);
 
 const animate = () => {
   canvas.height = window.innerHeight;
-  car.draw(ctx);
+  car.render(ctx);
   requestAnimationFrame(animate);
 };
 
