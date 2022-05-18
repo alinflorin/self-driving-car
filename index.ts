@@ -1,6 +1,17 @@
 // Import stylesheets
+import { Car } from './car';
 import './style.scss';
 
-// Write TypeScript code!
-const appDiv: HTMLElement = document.getElementById('app');
-appDiv.innerHTML = `<h1>TypeScript Starter</h1>`;
+const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+canvas.width = 200;
+const ctx = canvas.getContext('2d');
+
+const car = new Car(100, 100, 30, 50);
+
+const animate = () => {
+  car.draw(ctx);
+  canvas.height = window.innerHeight;
+  requestAnimationFrame(animate);
+};
+
+animate();
