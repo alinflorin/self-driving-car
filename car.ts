@@ -18,12 +18,7 @@ export class Car {
     this.controls = new Controls(controllable);
   }
 
-  render(ctx: CanvasRenderingContext2D) {
-    this.update();
-    this.draw(ctx);
-  }
-
-  private update() {
+  update() {
     if (this.controls.isMovingForward) {
       this.speed += this.acceleration;
     }
@@ -66,7 +61,7 @@ export class Car {
     this.y -= Math.cos(this.angle) * this.speed;
   }
 
-  private draw(ctx: CanvasRenderingContext2D) {
+  draw(ctx: CanvasRenderingContext2D) {
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.rotate(-this.angle);
