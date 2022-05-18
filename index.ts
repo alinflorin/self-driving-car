@@ -1,5 +1,5 @@
 // Import stylesheets
-import './style.css';
+import './style.scss';
 
 // Write TypeScript code!
 const appDiv: HTMLElement = document.getElementById('app');
