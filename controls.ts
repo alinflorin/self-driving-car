@@ -6,11 +6,21 @@ export class Controls {
 
   constructor(controllable: boolean) {
     if (controllable) {
-      window.addEventListener('keyup', () => {
-        this.forward = false;
-        this.backward = false;
-        this.left = false;
-        this.right = false;
+      window.addEventListener('keyup', (e) => {
+        switch (e.key) {
+          case 'ArrowUp':
+            this.forward = false;
+            break;
+          case 'ArrowDown':
+            this.backward = false;
+            break;
+          case 'ArrowLeft':
+            this.left = false;
+            break;
+          case 'ArrowRight':
+            this.right = false;
+            break;
+        }
       });
 
       window.addEventListener('keydown', (e) => {

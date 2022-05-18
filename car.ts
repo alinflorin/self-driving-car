@@ -4,6 +4,7 @@ export class Car {
   private speed = 0;
   private acceleration = 0.2;
   private friction = 0.05;
+  private angle = 0;
   private controls: Controls;
 
   constructor(
@@ -49,17 +50,30 @@ export class Car {
       this.speed = 0;
     }
 
-    this.y -= this.speed;
+    if (this.speed !== 0) {
+      const flip = this.speed > 0 ? 1 : -1;
+
+      if (this.controls.isMovingLeft) {
+        this.angle += flip * 0.03;
+      }
+
+      if (this.controls.isMovingRight) {
+        this.angle -= flip * 0.03;
+      }
+    }
+
+    this.x -= Math.sin(this.angle) * this.speed;
+    this.y -= Math.cos(this.angle) * this.speed;
   }
 
   private draw(ctx: CanvasRenderingContext2D) {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(-this.angle);
     ctx.beginPath();
-    ctx.rect(
-      this.x - this.width / 2,
-      this.y - this.height / 2,
-      this.width,
-      this.height
-    );
+    ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
     ctx.fill();
+
+    ctx.restore();
   }
 }
