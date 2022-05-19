@@ -18,6 +18,10 @@ export class Car {
     this.controls = new Controls(controllable);
   }
 
+  getY() {
+    return this.y;
+  }
+
   update() {
     if (this.controls.isMovingForward) {
       this.speed += this.acceleration;
