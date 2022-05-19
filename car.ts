@@ -53,11 +53,11 @@ export class Car {
       const flip = this.speed > 0 ? 1 : -1;
 
       if (this.controls.isMovingLeft) {
-        this.angle += flip * 0.03;
+        this.angle += flip * 0.05;
       }
 
       if (this.controls.isMovingRight) {
-        this.angle -= flip * 0.03;
+        this.angle -= flip * 0.05;
       }
     }
 
