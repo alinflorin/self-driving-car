@@ -1,22 +1,15 @@
 import { Car } from './car';
 import { Coords } from './coords';
-import { lerp } from './utils';
+import { getIntersection, lerp } from './utils';
 
 export class Sensor {
-  private rayCount: number;
-  private rayLength: number;
-  private raySpread: number;
-  private rays: Coords[];
-  private readings: Coords[];
+  private rayCount = 5;
+  private rayLength = 150;
+  private raySpread = Math.PI / 2;
 
-  constructor(private car: Car) {
-    this.rayCount = 5;
-    this.rayLength = 150;
-    this.raySpread = Math.PI / 2;
-
-    this.rays = [];
-    this.readings = [];
-  }
+  private rays: Coords[][] = [];
+  private readings: Coords[] = [];
+  constructor(private car: Car) {}
 
   update(roadBorders: Coords[][]) {
     this.#castRays();
@@ -27,7 +20,7 @@ export class Sensor {
   }
 
   #getReading(ray: Coords[], roadBorders: Coords[][]) {
-    let touches = [];
+    let touches: Coords[] = [];
 
     for (let i = 0; i < roadBorders.length; i++) {
       const touch = getIntersection(
@@ -58,18 +51,18 @@ export class Sensor {
           this.raySpread / 2,
           -this.raySpread / 2,
           this.rayCount == 1 ? 0.5 : i / (this.rayCount - 1)
-        ) + this.car.angle;
+        ) + this.car.getAngle();
 
-      const start = { x: this.car.x, y: this.car.y };
-      const end = {
-        x: this.car.x - Math.sin(rayAngle) * this.rayLength,
-        y: this.car.y - Math.cos(rayAngle) * this.rayLength,
+      const start: Coords = { x: this.car.getX(), y: this.car.getY() };
+      const end: Coords = {
+        x: this.car.getX() - Math.sin(rayAngle) * this.rayLength,
+        y: this.car.getY() - Math.cos(rayAngle) * this.rayLength,
       };
       this.rays.push([start, end]);
     }
   }
 
-  draw(ctx) {
+  draw(ctx: CanvasRenderingContext2D) {
     for (let i = 0; i < this.rayCount; i++) {
       let end = this.rays[i][1];
       if (this.readings[i]) {

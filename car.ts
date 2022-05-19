@@ -1,4 +1,6 @@
 import { Controls } from './controls';
+import { Coords } from './coords';
+import { Sensor } from './sensor';
 
 export class Car {
   private speed = 0;
@@ -6,6 +8,7 @@ export class Car {
   private friction = 0.05;
   private angle = 0;
   private controls: Controls;
+  private sensor: Sensor;
 
   constructor(
     private x: number,
@@ -13,8 +16,9 @@ export class Car {
     private width: number,
     private height: number,
     private maxSpeed: number,
-    private controllable: boolean
+    controllable: boolean
   ) {
+    this.sensor = new Sensor(this);
     this.controls = new Controls(controllable);
   }
 
@@ -22,7 +26,20 @@ export class Car {
     return this.y;
   }
 
-  update() {
+  getX() {
+    return this.x;
+  }
+
+  getAngle() {
+    return this.angle;
+  }
+
+  update(roadBorders: Coords[][]) {
+    this.move();
+    this.sensor.update(roadBorders);
+  }
+
+  private move() {
     if (this.controls.isMovingForward) {
       this.speed += this.acceleration;
     }
@@ -74,5 +91,7 @@ export class Car {
     ctx.fill();
 
     ctx.restore();
+
+    this.sensor.draw(ctx);
   }
 }

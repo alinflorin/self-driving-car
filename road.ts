@@ -26,6 +26,10 @@ export class Road {
     ];
   }
 
+  getBorders() {
+    return this.borders;
+  }
+
   getLaneCenter(laneIndex: number) {
     const laneWidth = this.width / this.laneCount;
     return (
